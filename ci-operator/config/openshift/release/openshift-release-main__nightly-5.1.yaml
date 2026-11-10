@@ -3227,6 +3227,45 @@ tests:
       enable:
       - observers-resource-watch
     workflow: openshift-e2e-aws-disruption
+- as: e2e-azure-nodes-isolated-techpreview
+  cron: 13 3 * * 1
+  shard_count: 2
+  steps:
+    cluster_profile: openshift-org-azure
+    env:
+      FEATURE_SET: TechPreviewNoUpgrade
+      TEST_ARGS: --disable-monitor=audit-log-analyzer --run OCPFeatureGate|Feature
+      TEST_SUITE: openshift/nodes/isolated
+    observers:
+      enable:
+      - observers-resource-watch
+    workflow: openshift-e2e-azure
+- as: e2e-gcp-nodes-isolated-techpreview
+  cron: 27 5 * * 2
+  shard_count: 2
+  steps:
+    cluster_profile: openshift-org-gcp
+    env:
+      FEATURE_SET: TechPreviewNoUpgrade
+      TEST_ARGS: --disable-monitor=audit-log-analyzer --run OCPFeatureGate|Feature
+      TEST_SUITE: openshift/nodes/isolated
+    observers:
+      enable:
+      - observers-resource-watch
+    workflow: openshift-e2e-gcp
+- as: e2e-vsphere-nodes-isolated-techpreview
+  cron: 19 8 * * 3
+  shard_count: 2
+  steps:
+    cluster_profile: vsphere-elastic
+    env:
+      FEATURE_SET: TechPreviewNoUpgrade
+      TEST_ARGS: --disable-monitor=audit-log-analyzer,known-image-checker --run OCPFeatureGate|Feature
+      TEST_SUITE: openshift/nodes/isolated
+    observers:
+      enable:
+      - observers-resource-watch
+    workflow: openshift-e2e-vsphere-ovn
 - as: e2e-azure-disruptive-longrunning-techpreview
   interval: 168h
   shard_count: 2
